@@ -1,9 +1,11 @@
-from index import Window , Line , Point
+from multiprocessing.spawn import import_main_path
+from index import*
+from cell import*
+from maze import*
 
 def main():
     win = Window(800, 600)
-    l = Line(Point(10,10),Point(500,500))
-    win.line_draw(l,"black")
-    win.wait_for_close()
+    maze = Maze(1,1,10,10,10,10,20,20,win)
+    maze._create_cells()
 
 main()

@@ -40,3 +40,7 @@ class Line:
     def draw(self,canvas,fill_color):
         canvas.create_line(self.point_1.x,self.point_1.y,self.point_2.x,self.point_2.y,fill = fill_color,width=2)
         canvas.pack()
+
+
+
+    
