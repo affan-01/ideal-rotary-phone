@@ -12,7 +12,7 @@ class Cell:
         self.x2 = None
         self.y1 = None
         self.y2 = None
-        self.__visited = False
+        self.visited = False
         self._win = win
     
     def draw(self,x1,y1,x2,y2,win):
@@ -21,16 +21,25 @@ class Cell:
         self.__y1 = y1
         self.__y2 = y2
         self._win = win
+
+        line = Line(Point(x1,y1) , Point(x1,y2))
+        self._win.line_draw(line,"white")
+        line = Line(Point(x1,y1) , Point(x2,y1))
+        self._win.line_draw(line,"white")
+        line = Line(Point(x1,y2) , Point(x1,y2))
+        self._win.line_draw(line,"white")
+        line = Line(Point(x2,y1) , Point(x2,y2))
+        self._win.line_draw(line,"white")
         
         if self.l_wall:
             l = Line(Point(x1,y1),Point(x1,y2))
-            self._win.line_draw(l,"red")
+            self._win.line_draw(l,"black")
         if self.r_wall:
             l = Line(Point(x2,y1),Point(x2,y2))
             self._win.line_draw(l,"black")
         if self.t_wall:
             l = Line(Point(x1,y1),Point(x2,y1))
-            self._win.line_draw(l,"red")
+            self._win.line_draw(l,"black")
         if self.b_wall:
             l = Line(Point(x1,y2),Point(x2,y2))
             self._win.line_draw(l,"black")
