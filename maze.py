@@ -26,7 +26,8 @@ class Maze:
         self._win = win
         if seed != None:
             random.seed(seed)
-     
+    
+    #creating a grid of cells 
     def _create_cells(self):
         self._cells = []
         for i in range(0,self.__num_rows):
@@ -55,4 +56,57 @@ class Maze:
             return
         self._win.redraw()
         time.sleep(0.05)
+
+    #breaking walls of the grid randomly to form a maze
+    def _break_walls(self,i,j):
+        self._cells[i][j].visited = True
+
+        while True:
+            next_index_list = []
+            directions = 0
+            #checking which direction to choose
+            if i > 0 and self._cells[i-1][j].visited == False:
+                next_index_list.append((i-1,j))
+                directions += 1
+            if i < self.__num_rows-1 and self._cells[i+1][j].visited == False:
+                next_index_list.append((i+1,j))
+                directions += 1
+            if j > 0 and self._cells[i][j-1].visited == False:
+                next_index_list.append((i,j-1))
+                directions += 1
+            if j < self.__num_columns-1 and self._cells[i][j+1].visited == False:
+                next_index_list.append((i,j+1))
+                directions += 1
+            
+            #if no possible moves
+            if directions == 0:
+                self._draw_cell(i,j)
+                return 
+            
+            chosen_direction = random.randrange(directions)
+            next_index = next_index_list[chosen_direction]
+
+            if next_index[0] == i+1:
+                self._cells[i][j].r_wall = False
+                self._cells[i+1][j].l_wall = False
+            if next_index[0] == i-1:
+                self._cells[i][j].l_wall = False
+                self._cells[i-1][j].r_wall = False
+            if next_index[1] == j+1:
+                self._cells[i][j].b_wall = False
+                self._cells[i][j+1].t_wall = False
+            if next_index[1] == j-1:
+                self._cells[i][j].t_wall = False
+                self._cells[i][j-1].b_wall = False
+            
+            self._animate()
+            self._break_walls(next_index[0] , next_index[1])
+
+
+
+
+
+            
+
+
 
